@@ -1,0 +1,7 @@
+{
+  "name": "Interior redesign app",
+  "description": "An interactive room makeover app that uses Gemini AI to reimagine your living spaces in various styles with real-time editing and shoppable insights.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
