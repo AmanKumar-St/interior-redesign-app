@@ -8,13 +8,13 @@ import * as gemini from './services/geminiService';
 
 const App: React.FC = () => {
   const [state, setState] = useState<DesignState>({
-    originalImage: null,
+    originalImage: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==',
     currentImage: null,
     history: [],
     messages: [],
     selectedStyleId: '',
     isProcessing: false,
-    statusMessage: 'Upload a photo to begin your room transformation'
+    statusMessage: 'Select a style to reimagine your room'
   });
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {

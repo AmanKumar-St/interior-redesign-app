@@ -8,7 +8,7 @@ const getAIClient = () => {
  * Helper to resize and compress images before sending to API.
  * This drastically reduces token usage and prevents 429 Rate Limit errors.
  */
-const compressImage = (base64Str: string, maxWidth = 1024, quality = 0.7): Promise<string> => {
+const compressImage = (base64Str: string, maxWidth = 256, quality = 0.3): Promise<string> => {
   return new Promise((resolve) => {
     const img = new Image();
     img.src = base64Str;
@@ -44,8 +44,8 @@ const compressImage = (base64Str: string, maxWidth = 1024, quality = 0.7): Promi
  */
 async function retryWithBackoff<T>(
   operation: () => Promise<T>,
-  retries: number = 3,
-  delay: number = 4000 // Increased to 4 seconds for better rate limit handling
+  retries: number = 5,
+  delay: number = 15000 // Increased to 15 seconds to handle long rate limits
 ): Promise<T> {
   try {
     return await operation();
@@ -59,7 +59,7 @@ async function retryWithBackoff<T>(
     if (retries > 0 && isRateLimit) {
       console.warn(`API Rate Limit hit. Retrying in ${delay}ms... (${retries} retries left)`);
       await new Promise(resolve => setTimeout(resolve, delay));
-      return retryWithBackoff(operation, retries - 1, delay * 2);
+      return retryWithBackoff(operation, retries - 1, delay * 1.5);
     }
     
     throw error;
