@@ -1,5 +1,7 @@
 # Lumina - AI-Powered Interior Design
 
+🚀 **[Live Demo](https://interior-redesign-app.vercel.app/)**
+
 Lumina is an AI-powered interior design web application that allows users to seamlessly transform their living spaces with the power of generative AI. By uploading a photo of a room, users can apply various design styles, receive intelligent suggestions, and edit the room using an interactive AI design consultant.
 
 ## Features
