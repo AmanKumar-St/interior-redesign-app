@@ -4,7 +4,8 @@ import { DesignState, Message } from './types';
 import { INTERIOR_STYLES } from './constants';
 import { ComparisonSlider } from './components/ComparisonSlider';
 import { ChatInterface } from './components/ChatInterface';
-import * as gemini from './services/geminiService';
+import * as hf from './services/huggingfaceService';
+import * as openrouter from './services/openrouterService';
 
 const App: React.FC = () => {
   const [state, setState] = useState<DesignState>({
@@ -49,7 +50,7 @@ const App: React.FC = () => {
       statusMessage: `Reimagining in ${style.name}...`
     }));
 
-    const result = await gemini.generateStyleMakeover(state.originalImage, style.prompt);
+    const result = await hf.generateStyleMakeover(state.originalImage, style.prompt);
     
     if (result) {
       setState(prev => ({
@@ -83,7 +84,7 @@ const App: React.FC = () => {
     const isEditInstruction = /make|change|remove|add|paint|replace|put|room/i.test(text);
 
     if (isEditInstruction) {
-      const result = await gemini.editImageWithPrompt(state.currentImage, text);
+      const result = await hf.editImageWithPrompt(state.currentImage, text);
       if (result) {
         const assistantMessage: Message = { 
           role: 'assistant', 
@@ -107,7 +108,7 @@ const App: React.FC = () => {
         }));
       }
     } else {
-      const advice = await gemini.getExpertAdvice(state.currentImage, text, state.messages);
+      const advice = await openrouter.getExpertAdvice(state.currentImage, text, state.messages);
       const assistantMessage: Message = { 
         role: 'assistant', 
         content: advice.text, 
@@ -189,7 +190,7 @@ const App: React.FC = () => {
 
         <footer className="pt-4 border-t border-slate-100">
           <p className="text-[10px] text-slate-400 leading-relaxed uppercase tracking-tighter">
-            Powered by Gemini 3.0 & 2.5 • High Precision Vision • Generative Aesthetics
+            Powered by Flux & SDXL • OpenRouter Free Models • Generative Aesthetics
           </p>
         </footer>
       </div>
